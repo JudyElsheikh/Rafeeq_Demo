@@ -187,3 +187,16 @@ html,body,*{scrollbar-width:none;-ms-overflow-style:none}
 .research-url-label{display:block;font-size:13px;margin:18px 0 7px}.research-url{width:100%;max-width:650px;min-width:0;padding:12px;border:1px solid #bfd4d7;background:#fff;border-radius:7px;font-size:15px}#research-colab-link:not(:empty){margin-top:18px}
 @media(max-width:1000px){.research-candidates{grid-template-columns:1fr}.research-candidates .research-fields{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.research-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px}.research-tabs button{font-size:12px;padding:10px 8px;min-width:0}.research-panel{padding:22px 18px}.research-panel h2{font-size:23px}.research-fields,.research-candidates .research-fields{grid-template-columns:1fr}.research-card{padding:19px}.research-checklist li{flex-direction:column;gap:10px}.research-flow{gap:8px}.research-flow>span{padding:10px;font-size:12px}.research-prototype-label p{font-size:12px}}
+
+/* Delivery phase and team assignments on the Core AI feature cards. */
+.feature-button-content{display:flex;flex:1;min-width:0;flex-direction:column;align-items:flex-start;gap:10px}
+.feature-phase-tag,.feature-assignee{display:inline-flex;border-radius:20px;padding:4px 10px;font-size:12px;line-height:1.5;font-weight:600}
+.feature-button-grid{row-gap:28px;padding-top:12px}
+.feature-button{position:relative;min-height:148px;padding-top:42px}
+.feature-phase-tag{position:absolute;top:12px;left:22px;padding:0;background:transparent;color:#626b6d;border:0;border-radius:0;z-index:1}
+.feature-phase-tag.delivery-phase-2{color:#626b6d}
+.feature-assignees{display:flex;flex-wrap:wrap;gap:6px}
+.feature-assignee{background:#f4f7f5;color:#43594d;border:1px solid #dce5e0}
+@media(max-width:850px){.feature-button-content{flex:1 1 150px}}
+
+.feature-button:hover .feature-phase-tag{background:transparent}
