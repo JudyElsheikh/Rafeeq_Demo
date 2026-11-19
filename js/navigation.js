@@ -1,0 +1,7 @@
+Rafeeq.initPresentation=()=>{
+ let index=0,active=false;const sections=()=>[...document.querySelectorAll('.slide-section')],controls=document.querySelector('#presentation-controls');
+ const update=()=>{const all=sections();index=Math.max(0,Math.min(index,all.length-1));all.forEach((s,i)=>s.classList.toggle('slide-hidden',active&&i!==index));document.querySelector('#slide-count').textContent=`${index+1} / ${all.length}`;document.querySelector('#prev-slide').disabled=index===0;document.querySelector('#next-slide').disabled=index===all.length-1;window.scrollTo(0,0)};
+ const exit=()=>{active=false;document.body.classList.remove('presenting');controls.hidden=true;update();document.querySelector('#presentation').focus()};
+ document.querySelector('#presentation').onclick=()=>{active=true;index=0;document.body.classList.add('presenting');controls.hidden=false;update();document.querySelector('#next-slide').focus()};document.querySelector('#exit-presentation').onclick=exit;document.querySelector('#prev-slide').onclick=()=>{index--;update()};document.querySelector('#next-slide').onclick=()=>{index++;update()};
+ document.addEventListener('keydown',e=>{if(!active||document.querySelector('dialog[open]')||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='Escape'){e.preventDefault();exit()}if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();index+=e.key==='ArrowRight'?1:-1;update()}});
+};

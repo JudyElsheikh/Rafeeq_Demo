@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Rafeeq layout checks</title></head><body data-status="passed"><h1>Rafeeq layout checks</h1><pre id="results">PASS Sidebar removed
+PASS Presentation controls removed
+PASS No home search
+PASS Banner has no buttons
+PASS Previous home blocks removed
+PASS Use cases immediately follow banner
+PASS Phases follow use cases
+PASS Exactly five expandable use cases
+PASS All original UC1-UC5 feature placements retained
+PASS Text-only Rafeeq brand
+PASS Phase scrollbars hidden
+PASS No divider after last phase row
+PASS Phase cards have no accent stripe
+PASS No home breadcrumb
+PASS Phase 3 has 17 entries
+PASS Seven Phase 3 feature names indicate AI options
+PASS AI option note appears in Phase 3 only
+PASS Features heading
+PASS Three feature tabs
+PASS Shared tab switches panels
+PASS Four shared capabilities
+PASS Capability expands
+PASS Supplied data notes rendered
+PASS Four additional features
+PASS Keyboard tab navigation
+PASS Use case expands
+PASS Use case collapses
+PASS Four phase cards
+PASS Updated phase entries preserved
+PASS Only Phase 1 links to a page
+PASS No other outgoing home-page navigation
+PASS Phase lists scroll independently
+PASS Four distinct classification colors
+PASS Consistent use-case color UC1
+PASS Consistent use-case color UC2
+PASS Consistent use-case color UC3
+PASS Consistent use-case color UC4
+PASS Consistent use-case color UC5
+PASS Long phase list has bounded height
+PASS Phase feature list can scroll
+PASS Clicking Phase 1 card navigates
+PASS Pipeline is the first Phase 1 section
+PASS Nine exact pipeline blocks
+PASS Pipeline has connecting arrows
+PASS Six numbered feature buttons
+PASS Features numbered in source order
+PASS Previous detailed feature cards removed
+PASS Feature destination feature.html?id=overwhelm
+PASS Feature destination feature.html?id=focus-sleep
+PASS Feature destination feature.html?id=homework
+PASS Feature destination feature.html?id=off-task
+PASS Feature destination feature.html?id=chores
+PASS Feature destination feature.html?id=classroom
+PASS Existing feature page retained
+PASS Feature page uses simplified shell
+PASS No page overflow 320 index.html
+PASS Phase columns at 320
+PASS No page overflow 320 phase1.html
+PASS No page overflow 320 feature.html?id=overwhelm
+PASS No page overflow 390 index.html
+PASS Phase columns at 390
+PASS No page overflow 390 phase1.html
+PASS No page overflow 390 feature.html?id=overwhelm
+PASS No page overflow 700 index.html
+PASS Phase columns at 700
+PASS No page overflow 700 phase1.html
+PASS No page overflow 700 feature.html?id=overwhelm
+PASS No page overflow 768 index.html
+PASS Phase columns at 768
+PASS No page overflow 768 phase1.html
+PASS No page overflow 768 feature.html?id=overwhelm
+PASS No page overflow 850 index.html
+PASS Phase columns at 850
+PASS No page overflow 850 phase1.html
+PASS No page overflow 850 feature.html?id=overwhelm
+PASS No page overflow 1024 index.html
+PASS Phase columns at 1024
+PASS No page overflow 1024 phase1.html
+PASS No page overflow 1024 feature.html?id=overwhelm
+PASS No page overflow 1440 index.html
+PASS Phase columns at 1440
+PASS No page overflow 1440 phase1.html
+PASS No page overflow 1440 feature.html?id=overwhelm
+PASS Legacy page returns to home features.html
+PASS Legacy page returns to home phases.html
+PASS Legacy page returns to home phase.html?id=3
+
+86 checks; 0 failures.</pre><iframe title="Showcase under test" style="width: 1440px; height: 1000px;" src="../phase.html?id=3"></iframe><script>
+(async()=>{let lines=[],fail=0,count=0;const frame=document.querySelector('iframe');function check(ok,label){count++;if(!ok)fail++;lines.push((ok?'PASS ':'FAIL ')+label)}function load(path){return new Promise((resolve,reject)=>{let timer=setTimeout(()=>reject(Error('Timeout '+path)),10000);frame.onload=()=>{clearTimeout(timer);resolve(frame.contentWindow)};frame.src='../'+path})}
+try{let w=await load('index.html'),d=w.document;
+check(!d.querySelector('.sidebar'),'Sidebar removed');check(!d.querySelector('#presentation'),'Presentation controls removed');check(!d.querySelector('input[type=search]'),'No home search');check(!d.querySelector('.hero a'),'Banner has no buttons');check(!d.querySelector('.stats,.roadmap-grid,.overview-bottom'),'Previous home blocks removed');check(d.querySelector('.hero').nextElementSibling.id==='use-cases','Use cases immediately follow banner');check(d.querySelector('#use-cases').nextElementSibling.id==='implementation-phases','Phases follow use cases');check(d.querySelectorAll('details.use-case').length===5,'Exactly five expandable use cases');check(d.querySelectorAll('.feature-row').length===26,'All original UC1-UC5 feature placements retained');
+check(d.querySelector('.topbar .brand').textContent==='Rafeeq'&&!d.querySelector('.brand-mark,.brand-ar,.eco-symbol'),'Text-only Rafeeq brand');
+check([...d.querySelectorAll('.phase-list-scroll')].every(el=>w.getComputedStyle(el).scrollbarWidth==='none'),'Phase scrollbars hidden');
+check([...d.querySelectorAll('.phase-entries li:last-child')].every(el=>w.getComputedStyle(el).borderBottomWidth==='0px'),'No divider after last phase row');
+check([...d.querySelectorAll('.home-phase')].every(el=>w.getComputedStyle(el).borderTopWidth==='1px'),'Phase cards have no accent stripe');
+check(!d.querySelector('.breadcrumbs'),'No home breadcrumb');check(d.querySelectorAll('.phase-3 .phase-entries li').length===17,'Phase 3 has 17 entries');check(d.querySelectorAll('.phase-3 .ai-option-name').length===7,'Seven Phase 3 feature names indicate AI options');check(!!d.querySelector('.phase-3 .ai-option-note')&&!d.querySelector('.phase-4 .ai-option-note'),'AI option note appears in Phase 3 only');check(d.querySelector('#use-cases h2').textContent==='Features','Features heading');check(d.querySelectorAll('[role="tab"]').length===3,'Three feature tabs');d.querySelector('#tab-shared').click();check(!d.querySelector('#panel-shared').hidden&&d.querySelector('#panel-usecases').hidden,'Shared tab switches panels');check(d.querySelectorAll('#panel-shared .capability-card').length===4,'Four shared capabilities');d.querySelector('#panel-shared summary').click();check(d.querySelector('#panel-shared details').open,'Capability expands');check(d.querySelector('#panel-shared').textContent.includes('Task start times'),'Supplied data notes rendered');d.querySelector('#tab-additional').click();check(!d.querySelector('#panel-additional').hidden&&d.querySelectorAll('#panel-additional .capability-card').length===4,'Four additional features');d.querySelector('#tab-additional').dispatchEvent(new w.KeyboardEvent('keydown',{key:'Home',bubbles:true}));check(!d.querySelector('#panel-usecases').hidden,'Keyboard tab navigation');
+let uc=d.querySelector('details');uc.querySelector('summary').click();check(uc.open,'Use case expands');uc.querySelector('summary').click();check(!uc.open,'Use case collapses');check(d.querySelectorAll('.home-phase').length===4,'Four phase cards');check(d.querySelectorAll('.phase-entries li').length===40,'Updated phase entries preserved');check(d.querySelectorAll('.home-phase a').length===1&&d.querySelector('.home-phase a').getAttribute('href')==='phase1.html','Only Phase 1 links to a page');check([...d.querySelectorAll('a')].filter(a=>!a.getAttribute('href').startsWith('#')).every(a=>a.getAttribute('href')==='phase1.html'||a.getAttribute('href')==='index.html'),'No other outgoing home-page navigation');check([...d.querySelectorAll('.phase-list-scroll')].every(el=>w.getComputedStyle(el).overflowY==='auto'),'Phase lists scroll independently');check(new Set([...d.querySelectorAll('.legend .badge')].map(el=>w.getComputedStyle(el).backgroundColor)).size===4,'Four distinct classification colors');
+for(let id of ['UC1','UC2','UC3','UC4','UC5']){let group=d.getElementById(id),tag=d.querySelector('.phase-entries .uc-'+id.toLowerCase());check(w.getComputedStyle(group).getPropertyValue('--uc')===w.getComputedStyle(tag).getPropertyValue('--uc'),'Consistent use-case color '+id)}
+let scroll=d.querySelector('.phase-3 .phase-list-scroll');check(scroll.scrollHeight>scroll.clientHeight,'Long phase list has bounded height');scroll.scrollTop=200;check(scroll.scrollTop>0,'Phase feature list can scroll');
+let card=d.querySelector('.home-phase.available');card.querySelector('.phase-card-heading').click();await new Promise(resolve=>{frame.onload=resolve});w=frame.contentWindow;d=w.document;check(w.location.pathname.endsWith('phase1.html'),'Clicking Phase 1 card navigates');check(d.querySelector('main .panel').classList.contains('pipeline-panel'),'Pipeline is the first Phase 1 section');check(d.querySelectorAll('.pipeline-block').length===9,'Nine exact pipeline blocks');check(w.getComputedStyle(d.querySelector('.pipeline-block'),'::after').content.includes('\u2192'),'Pipeline has connecting arrows');check(d.querySelectorAll('.feature-button').length===6,'Six numbered feature buttons');check([...d.querySelectorAll('.feature-button-number')].map(e=>e.textContent).join(',')==='1,2,3,4,5,6','Features numbered in source order');check(!d.querySelector('.ai-card'),'Previous detailed feature cards removed');
+for(let a of [...d.querySelectorAll('.feature-button')]){let response=await fetch(a.href);check(response.ok,'Feature destination '+a.getAttribute('href'))}
+w=await load('feature.html?id=overwhelm');check(w.document.querySelectorAll('.technical-section').length===5&&w.document.querySelector('#decision'),'Existing feature page retained');check(!w.document.querySelector('.sidebar,#presentation'),'Feature page uses simplified shell');
+for(let width of [320,390,700,768,850,1024,1440]){frame.style.width=width+'px';for(let path of ['index.html','phase1.html','feature.html?id=overwhelm']){w=await load(path);check(w.document.documentElement.scrollWidth<=w.innerWidth,'No page overflow '+width+' '+path);if(path==='index.html')check(w.getComputedStyle(w.document.querySelector('.home-phase-grid')).gridTemplateColumns.split(' ').length===(width>700?2:1),'Phase columns at '+width)}}
+for(let path of ['features.html','phases.html','phase.html?id=3']){w=await load(path);await new Promise(r=>setTimeout(r,100));check(frame.contentWindow.location.pathname.endsWith('index.html'),'Legacy page returns to home '+path)}
+}catch(e){fail++;lines.push('ERROR '+e.stack)}lines.push('\n'+count+' checks; '+fail+' failures.');document.querySelector('#results').textContent=lines.join('\n');document.body.dataset.status=fail?'failed':'passed';})();
+</script></body></html>

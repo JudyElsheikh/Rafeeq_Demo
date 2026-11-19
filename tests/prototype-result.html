@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Feature 1 prototype checks</title></head><body data-status="passed"><pre id="results">PASS Eight named tabs
+PASS Only one panel visible
+PASS Old section navigation replaced
+PASS Tab opens: Feature Overview
+PASS Tab opens: AI System
+PASS Tab opens: Candidate Models
+PASS Tab opens: Datasets
+PASS Tab opens: Data Preparation
+PASS Tab opens: Evaluation Set
+PASS Tab opens: Model Comparison
+PASS Tab opens: Examples &amp; Colab
+PASS Evaluation contains no fabricated results
+PASS Non-Colab URL rejected
+PASS Colab URL creates notebook link
+PASS Keyboard Home selects first tab
+PASS No overflow 320 Feature Overview
+PASS No overflow 320 AI System
+PASS No overflow 320 Candidate Models
+PASS No overflow 320 Datasets
+PASS No overflow 320 Data Preparation
+PASS No overflow 320 Evaluation Set
+PASS No overflow 320 Model Comparison
+PASS No overflow 320 Examples &amp; Colab
+PASS No overflow 390 Feature Overview
+PASS No overflow 390 AI System
+PASS No overflow 390 Candidate Models
+PASS No overflow 390 Datasets
+PASS No overflow 390 Data Preparation
+PASS No overflow 390 Evaluation Set
+PASS No overflow 390 Model Comparison
+PASS No overflow 390 Examples &amp; Colab
+PASS No overflow 768 Feature Overview
+PASS No overflow 768 AI System
+PASS No overflow 768 Candidate Models
+PASS No overflow 768 Datasets
+PASS No overflow 768 Data Preparation
+PASS No overflow 768 Evaluation Set
+PASS No overflow 768 Model Comparison
+PASS No overflow 768 Examples &amp; Colab
+PASS No overflow 1440 Feature Overview
+PASS No overflow 1440 AI System
+PASS No overflow 1440 Candidate Models
+PASS No overflow 1440 Datasets
+PASS No overflow 1440 Data Preparation
+PASS No overflow 1440 Evaluation Set
+PASS No overflow 1440 Model Comparison
+PASS No overflow 1440 Examples &amp; Colab
+PASS Original page retained: focus-sleep
+PASS Original page retained: homework
+PASS Original page retained: off-task
+PASS Original page retained: chores
+PASS Original page retained: classroom
+
+52 checks; 0 failures.</pre><iframe title="Prototype test" style="width: 1440px; height: 1000px;" src="../feature.html?id=classroom"></iframe><script>
+(async()=>{let lines=[],fail=0;const frame=document.querySelector('iframe');const check=(ok,label)=>{lines.push((ok?'PASS ':'FAIL ')+label);if(!ok)fail++};const load=path=>new Promise(resolve=>{frame.onload=()=>resolve(frame.contentWindow);frame.src='../'+path});try{let w=await load('feature.html?id=overwhelm'),d=w.document;check(d.querySelectorAll('.research-tabs [role=tab]').length===8,'Eight named tabs');check(d.querySelectorAll('.research-panel:not([hidden])').length===1,'Only one panel visible');check(!d.querySelector('.section-nav'),'Old section navigation replaced');for(let tab of d.querySelectorAll('.research-tabs button')){tab.click();check(!d.getElementById(tab.getAttribute('aria-controls')).hidden,'Tab opens: '+tab.textContent)}check(d.querySelector('#research-panel-comparison').textContent.includes('Pending')&&!d.querySelector('.metric-track'),'Evaluation contains no fabricated results');let colab=d.querySelector('#research-colab-url');colab.value='https://example.com';colab.dispatchEvent(new w.Event('input'));check(!d.querySelector('#research-colab-link a'),'Non-Colab URL rejected');colab.value='https://colab.research.google.com/drive/test';colab.dispatchEvent(new w.Event('input'));check(!!d.querySelector('#research-colab-link a'),'Colab URL creates notebook link');let last=d.querySelector('#research-tab-examples');last.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Home',bubbles:true}));check(d.querySelector('#research-tab-overview').getAttribute('aria-selected')==='true','Keyboard Home selects first tab');
+for(let width of [320,390,768,1440]){frame.style.width=width+'px';for(let tab of d.querySelectorAll('.research-tabs button')){tab.click();check(d.documentElement.scrollWidth<=w.innerWidth,'No overflow '+width+' '+tab.textContent)}}
+for(let id of ['focus-sleep','homework','off-task','chores','classroom']){w=await load('feature.html?id='+id);check(!!w.document.querySelector('.section-nav')&&!w.document.querySelector('.research-tabs'),'Original page retained: '+id)}
+}catch(e){fail++;lines.push('ERROR '+e.stack)}lines.push('\n'+lines.length+' checks; '+fail+' failures.');document.querySelector('#results').textContent=lines.join('\n');document.body.dataset.status=fail?'failed':'passed'})();
+</script></body></html>
