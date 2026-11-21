@@ -14,6 +14,8 @@ Open **http://localhost:8000**. Stop the server with Ctrl+C. All pages also work
 
 ## Pages
 
+- `discover.html`: proposal page, opened through “Discover More About Rafeeq” in the home banner. Section navigation is attached to the sticky top bar, with overflowing topics in More, and displays one of 15 sections at a time. The introduction appears only on the first section, with direct section URLs and browser history. Preserves Word bold text, italics and lists, the existing interactive Features hierarchy, and 18 scrollable tables with sticky headers. Competitor names link directly from the matrix; the separate link table is omitted.
+- `tools/export_proposal.py`: regenerates the proposal content from the original DOCX with Python's standard library.
 - `index.html`: one scrolling home page with a banner, five expandable use cases (UC1-UC5), and four phase cards with independently scrollable feature lists. Only Phase 1 opens a page.
 - `phase1.html`: the eight-step pipeline with connecting arrows, followed by six numbered feature links.
 - `feature.html?id=overwhelm`: existing technical page. Other IDs: `focus-sleep`, `homework`, `off-task`, `chores`, `classroom`. Technical-page content awaits the next design pass.
