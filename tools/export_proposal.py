@@ -132,13 +132,23 @@ for element in body:
         current['parts'].append(f'<div class="proposal-table table-scroll" role="region" tabindex="0" aria-label="{caption} — scrollable table"><table><caption>{caption}</caption><thead>{output[0]}</thead><tbody>{"".join(output[1:])}</tbody></table></div>')
 flush()
 
+# Keep the showcase navigation in presentation order while preserving all source content.
+by_number = {section['number']: section for section in sections}
+for target, extra in [(8, 4), (9, 10), (9, 11)]:
+    by_number[target]['parts'].extend(['<h3>' + html.escape(by_number[extra]['title']) + '</h3>'] + by_number[extra]['parts'])
+order = [1, 2, 6, 7, 8, 3, 9, 12, 13, 14, 15, 5]
+sections = [by_number[number] for number in order]
+for number, section in enumerate(sections, 1):
+    section['source_number'] = section['number']
+    section['number'] = number
+
 navigation = '<div class="proposal-nav-inner"><div class="topic-links">' + ''.join(f'<button class="topic-link" type="button" data-topic="proposal-{s["number"]}" aria-controls="proposal-{s["number"]}">{html.escape(s["title"])}</button>' for s in sections) + '</div><details class="topic-more"><summary>More<span class="topic-chevron" aria-hidden="true"></span></summary><div class="topic-menu"></div></details></div>'
 content = []
 for section in sections:
     number = section['number']
     title = 'What is Rafeeq?' if number == 1 else section['title']
     parts = ''.join(section['parts'])
-    if number == 9:
+    if section['source_number'] == 9:
         parts = '<div id="discover-features"></div><details class="proposal-specifications"><summary>Full proposal feature specifications</summary>' + parts + '</details>'
     content.append(f'<section class="panel proposal-section" id="proposal-{number}" aria-labelledby="heading-{number}"'+(' hidden' if number != 1 else '')+f'><h2 id="heading-{number}">{html.escape(title)}</h2>{parts}</section>')
 

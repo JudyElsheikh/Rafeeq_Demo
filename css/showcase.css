@@ -200,3 +200,29 @@ html,body,*{scrollbar-width:none;-ms-overflow-style:none}
 @media(max-width:850px){.feature-button-content{flex:1 1 150px}}
 
 .feature-button:hover .feature-phase-tag{background:transparent}
+
+.feature-button.is-disabled{background:#f0f1f1;border-color:#d3d6d5;color:#727876;cursor:not-allowed;--uc:#727876;--uc-soft:#e3e5e4;--uc-border:#d3d6d5}
+.feature-button.is-disabled:hover{background:#f0f1f1;transform:none}
+.feature-button.is-disabled .uc-tag{background:#e3e5e4;color:#727876;border-color:#d3d6d5}
+.feature-pending{font-size:14px;color:#626b67}
+
+/* Research evidence shares a hierarchy, while content stays scoped to its feature. */
+.research-source{font-size:14px;color:var(--muted);line-height:1.7;margin:0 0 24px}
+.research-panel p,.research-panel li{font-size:16px;line-height:1.8}
+.research-panel h3{margin:28px 0 12px}
+.research-panel .research-card h3{margin-top:0}
+.research-panel ul{padding-left:22px;margin:16px 0}
+.research-panel li+li{margin-top:9px}
+.research-table{max-width:100%;margin:22px 0 30px}
+.research-table table{min-width:620px;white-space:normal;font-size:14px;line-height:1.65}
+.research-table th,.research-table td{vertical-align:top;min-width:100px;overflow-wrap:anywhere}
+.research-table caption{text-align:left;font-weight:600;padding-bottom:12px;color:var(--text)}
+.research-table .sel{background:#edf6ef}
+.research-table .sel td:first-child{font-weight:700;color:#1f6245}
+.research-table .num{white-space:nowrap;font-variant-numeric:tabular-nums}
+.research-panel .thumbnail{width:240px;max-width:100%;cursor:zoom-in}
+.research-panel .thumbnail img{height:150px;object-fit:contain;background:#f1f6f2}
+.research-panel .thumbnail span{font-size:14px;line-height:1.5}
+.research-panel .research-schema summary{font-size:16px}
+.research-panel .research-schema[open]{margin-bottom:24px}
+.research-panel .research-note{font-size:14px}

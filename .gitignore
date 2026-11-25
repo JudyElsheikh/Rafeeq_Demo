@@ -1,0 +1,4 @@
+.tmp-pdf/
+.tmp-browser/
+.tmp-qa/
+__pycache__/

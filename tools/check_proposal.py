@@ -22,9 +22,9 @@ class Content(HTMLParser):
 
 content = Content()
 content.feed(data['content'])
-assert content.sections == 15
+assert content.sections == 12
 assert content.tables == 18
-assert all(f'proposal-{i}' in content.ids for i in range(1, 16))
+assert all(f'proposal-{i}' in content.ids for i in range(1, 13))
 assert 'discover-features' in content.ids
 page = (root / 'discover.html').read_text(encoding='utf-8')
 for dependency in ['css/proposal.css', 'js/proposal.js', 'js/app.js']:
@@ -36,11 +36,11 @@ assert "document.getElementById('discover-features').innerHTML=featureTabs()" in
 assert '{overview,discover,phase1,feature}[page]' in app
 assert '<strong>Throughout the day</strong>' in data['content']
 assert '<ul>' in data['content'] and '<li>' in data['content']
-assert data['content'].count(' hidden') == 14
+assert data['content'].count(' hidden') == 11
 assert 'Competitor links' not in data['content']
 assert 'href="https://endeavorrx.com"' in data['content']
 assert 'href="https://character.ai"' in data['content']
 assert 'href="https://www.pearsonassessments.com/campaign/revibe.html"' in data['content']
 assert '<details class="topic-more">' in data['navigation']
-assert data['navigation'].count('data-topic=') == 15
-print('PASS: 15 sections, 18 tables, preserved bold and bullets, one initial section, linked competitor matrix, page dependencies and shared Features component.')
+assert data['navigation'].count('data-topic=') == 12
+print('PASS: 12 sections, 18 tables, preserved bold and bullets, one initial section, linked competitor matrix, page dependencies and shared Features component.')

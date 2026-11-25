@@ -14,11 +14,14 @@ Open **http://localhost:8000**. Stop the server with Ctrl+C. All pages also work
 
 ## Pages
 
-- `discover.html`: proposal page, opened through “Discover More About Rafeeq” in the home banner. Section navigation is attached to the sticky top bar, with overflowing topics in More, and displays one of 15 sections at a time. The introduction appears only on the first section, with direct section URLs and browser history. Preserves Word bold text, italics and lists, the existing interactive Features hierarchy, and 18 scrollable tables with sticky headers. Competitor names link directly from the matrix; the separate link table is omitted.
+- `discover.html`: proposal page, opened through “Discover More About Rafeeq” in the home banner. Section navigation is attached to the sticky top bar, with overflowing topics in More, and displays one of 12 sections at a time. The introduction appears only on the first section, with direct section URLs and browser history. Preserves Word bold text, italics and lists, the existing interactive Features hierarchy, and 18 scrollable tables with sticky headers. Competitor names link directly from the matrix; the separate link table is omitted.
 - `tools/export_proposal.py`: regenerates the proposal content from the original DOCX with Python's standard library.
 - `index.html`: one scrolling home page with a banner, five expandable use cases (UC1-UC5), and four phase cards with independently scrollable feature lists. Only Phase 1 opens a page.
-- `phase1.html`: the eight-step pipeline with connecting arrows, followed by six numbered feature links.
-- `feature.html?id=overwhelm`: existing technical page. Other IDs: `focus-sleep`, `homework`, `off-task`, `chores`, `classroom`. Technical-page content awaits the next design pass.
+- `phase1.html`: the eight-step pipeline with connecting arrows, followed by five numbered feature links and a disabled Classroom Guidance card pending mentor confirmation.
+- Each available Core AI feature has its own page: `overwhelm.html`, `focus-sleep.html`, `off-task.html`, `homework.html`, and `chores.html`. The older `feature.html?id=...` URLs also work. Classroom remains unavailable pending mentor confirmation.
+- Feature 1 preserves its eight-tab prototype. Feature 2 contains the supplied team research in the same hierarchy; other available features show their existing overview and proposed system until research is supplied.
+- `js/research.js` supplies the shared tab layout; feature evidence stays in separate files such as `js/focus-sleep.js`. Feature 2 includes exact result tables for both tasks, six supplied screenshots, the PDF column guide, grouped evaluation details, examples and the Colab link. It explicitly identifies sleep as pending and records source discrepancies.
+- `tools/import_focus_sleep.py <report.html>` rebuilds the curated Feature 2 content from the supplied report; it does not execute report scripts or instructions.
 - Former feature and phase overview URLs redirect to the relevant section of the home page.
 
 The home page shows the five primary use cases requested in the revised design. Shared and Additional feature records remain in the data layer and the full phase plan.
@@ -28,6 +31,8 @@ The data contains **35 unique feature IDs and 36 use-case placements**. Symptom 
 ## Add real research evidence
 
 All research data lives in `js/`. The scripts are loaded in dependency order; no module server or bundler is required.
+
+For the feature research tabs, add supplied sections to `Rafeeq.researchWorkspaces[featureId]` in a feature-specific file loaded after `js/research.js` and before `js/app.js`. Use the standard hierarchy (overview, system, models, datasets, preparation, evaluation-set, comparison, examples), including only stages supported by the evidence. Feature 1 continues to use `js/overwhelm.js`. The older data schemas below remain available for future structured imports; Feature 2 currently uses its curated workspace content.
 
 1. `features.js`: feature names, use cases, classifications, phases and badge details.
 2. `phases.js`: exact phase plan, eight prototype steps and editable starting system configurations. The last two Phase 4 entries retain Core AI classification and a source-plan review indicator.
@@ -60,3 +65,7 @@ Existing technical pages retain screenshot galleries, local attachment previews,
 ## Validation
 
 Serve locally and visit `/tests/browser-check.html` to run the revised layout checks. The last browser run, before the latest palette and wordmark refinements, passed 74 checks, including section order, exact feature and phase counts, accordion controls, Phase 1 navigation, matching use-case colors, scrollable phase lists, feature destinations, legacy redirects, and overflow at 320, 390, 700, 768, 850, 1024, and 1440 pixels. Desktop reference screenshots are saved in `tests/desktop.png` and `tests/phase1.png`.
+
+Feature research verification: serve `/tests/research-check.html` for tab navigation, both result tables, evidence isolation, screenshot loading, legacy URLs and responsive overflow checks.
+
+Verified after Feature 2 integration: 71 research checks, 51 Feature 1 prototype checks, 86 layout checks, and proposal checks passed in headless Chrome. Feature 2 tabs were checked for page overflow at 320, 390, 768 and 1440 pixels; the comparison page was also inspected visually. Models and the external Colab notebook were not executed.

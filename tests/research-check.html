@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Feature research checks</title></head><body><pre id="results">Running...</pre><iframe title="Research page under test" style="width:1280px;height:1000px"></iframe><script>
+(async()=>{
+ const frame=document.querySelector('iframe'),lines=[];let failures=0;
+ const check=(ok,label)=>{lines.push((ok?'PASS ':'FAIL ')+label);if(!ok)failures++;};
+ const load=path=>new Promise(resolve=>{frame.onload=()=>resolve(frame.contentWindow);frame.src='../'+path;});
+ try {
+  let w=await load('focus-sleep.html'),d=w.document;
+  check(d.querySelectorAll('[data-research-tab]').length===8,'Feature 2 has all eight supplied research stages');
+  check(d.querySelectorAll('.research-panel:not([hidden])').length===1,'One visible panel');
+  check(d.title.includes('Personalized Focus'),'Feature-specific document title');
+  const panel=id=>d.querySelector('#research-panel-'+id);
+  check(panel('comparison').querySelectorAll('table').length===2,'Separate model tables for minute and block targets');
+  const tables=panel('comparison').querySelectorAll('table');
+  check([...tables[0].querySelectorAll('tbody tr')].some(row=>[...row.cells].map(cell=>cell.textContent.trim()).join('|')==='Ridge (selected)|0.193|0.237|0.238'),'Main result preserved');
+  check([...tables[1].querySelectorAll('tbody tr')].some(row=>row.textContent.includes('2.427')&&row.textContent.includes('4.865')&&row.textContent.includes('0.236')),'Block result preserved');
+  check(tables[0].querySelectorAll('tbody tr').length===5&&tables[1].querySelectorAll('tbody tr').length===5,'Both baselines and all trained candidates retained');
+  check(panel('evaluation-set').textContent.includes('GroupKFold')&&panel('evaluation-set').textContent.includes('1,016')&&panel('evaluation-set').textContent.includes('246'),'Grouped evaluation cohorts preserved');
+  check(panel('datasets').querySelectorAll('[data-evidence-image]').length===6,'Six actual screenshots');
+  for(const image of d.querySelectorAll('[data-evidence-image] img'))check((await fetch(image.src)).ok,'Screenshot resolves '+image.getAttribute('src'));
+  check(panel('datasets').textContent.includes('Source discrepancy'),'Conflicting source evidence identified');
+  check(panel('examples').querySelector('a[href^="https://colab.research.google.com/drive/1uhc9fUquC7rcPyc8tk2Z8KODLj-aHCMj"]'),'Supplied notebook linked');
+  check(panel('examples').textContent.includes('No ground truth (illustration)'),'Illustrations distinguished from held-out examples');
+  for(const tab of d.querySelectorAll('[data-research-tab]')){tab.click();check(!panel(tab.dataset.researchTab).hidden,'Tab opens '+tab.textContent);}
+  const last=d.querySelector('#research-tab-examples');last.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Home',bubbles:true}));
+  check(d.querySelector('#research-tab-overview').getAttribute('aria-selected')==='true','Keyboard Home selects first tab');
+  for(const width of [320,390,768,1440]){frame.style.width=width+'px';for(const tab of d.querySelectorAll('[data-research-tab]')){tab.click();check(d.documentElement.scrollWidth<=w.innerWidth,'No overflow '+width+' '+tab.textContent);}}
+  d.querySelector('#research-tab-datasets').click();d.querySelector('[data-evidence-image]').click();check(d.querySelector('#gallery').open,'Screenshot opens gallery');d.querySelector('[data-gallery="close"]').click();
+  for(const id of ['homework','off-task','chores']){w=await load(id+'.html');d=w.document;check(d.querySelectorAll('[data-research-tab]').length===2,'Only supplied definition stages: '+id);check(!d.body.textContent.includes('0.193')&&!d.querySelector('[data-evidence-image]'),'No Feature 2 evidence leaked into '+id);}
+  w=await load('overwhelm.html');d=w.document;check(d.querySelectorAll('[data-research-tab]').length===8&&d.querySelector('#research-colab-url'),'Feature 1 prototype preserved');
+  w=await load('feature.html?id=focus-sleep#comparison');d=w.document;check(!d.querySelector('#research-panel-comparison').hidden,'Legacy URL and section link work');
+  w=await load('phase1.html');d=w.document;check(d.querySelectorAll('a.feature-button').length===5,'Five available features link to distinct pages');check(new Set([...d.querySelectorAll('a.feature-button')].map(a=>a.getAttribute('href'))).size===5,'Distinct feature page URLs');check(d.querySelector('.feature-button.is-disabled[aria-disabled="true"]')&&!d.querySelector('.feature-button.is-disabled[href]'),'Classroom remains disabled');
+ } catch(error){failures++;lines.push('ERROR '+error.stack);}
+ lines.push('\n'+lines.length+' checks; '+failures+' failures.');document.querySelector('#results').textContent=lines.join('\n');document.body.dataset.status=failures?'failed':'passed';
+})();
+</script></body></html>
