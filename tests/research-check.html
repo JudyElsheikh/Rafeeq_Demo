@@ -25,10 +25,38 @@
   check(d.querySelector('#research-tab-overview').getAttribute('aria-selected')==='true','Keyboard Home selects first tab');
   for(const width of [320,390,768,1440]){frame.style.width=width+'px';for(const tab of d.querySelectorAll('[data-research-tab]')){tab.click();check(d.documentElement.scrollWidth<=w.innerWidth,'No overflow '+width+' '+tab.textContent);}}
   d.querySelector('#research-tab-datasets').click();d.querySelector('[data-evidence-image]').click();check(d.querySelector('#gallery').open,'Screenshot opens gallery');d.querySelector('[data-gallery="close"]').click();
-  for(const id of ['homework','off-task','chores']){w=await load(id+'.html');d=w.document;check(d.querySelectorAll('[data-research-tab]').length===2,'Only supplied definition stages: '+id);check(!d.body.textContent.includes('0.193')&&!d.querySelector('[data-evidence-image]'),'No Feature 2 evidence leaked into '+id);}
-  w=await load('overwhelm.html');d=w.document;check(d.querySelectorAll('[data-research-tab]').length===8&&d.querySelector('#research-colab-url'),'Feature 1 prototype preserved');
+  for(const id of ['homework','off-task','chores']){w=await load(id+'.html');d=w.document;check(d.querySelectorAll('[data-research-tab]').length===(id==='off-task'?6:2),'Feature-specific research stages: '+id);check(!d.body.textContent.includes('0.193')&& !d.querySelector('img[src*="focus-sleep"]'),'No Feature 2 evidence leaked into '+id);}
+  w=await load('off-task.html');d=w.document;
+  check(d.querySelector('.page-heading .eyebrow').textContent.includes('Feature 1'),'Off-task is Feature 1');
+  check(!d.querySelector('.research-tabs'),'Off-task uses pipeline navigation without duplicate buttons');
+  check(d.querySelectorAll('.pipeline-tab').length===6,'Six pipeline navigation steps');
+  check(d.querySelectorAll('.pipeline-tab')[1].dataset.researchTab==='system','AI system type is step two');
+  check(d.querySelectorAll('#research-panel-overview .offtask-io-card').length===2,'Input and output shown in two cards');
+  check(d.querySelectorAll('.offtask-outcomes strong').length===2,'Two task output labels');
+  check(!d.querySelector('#research-panel-overview').textContent.includes('Completed:'),'Overview progress paragraph removed');
+  check(d.querySelector('#research-panel-overview details summary').textContent==='Camera and Workspace Calibration Details','Calibration is the first overview disclosure');
+  check(d.querySelectorAll('#research-panel-components .offtask-model-group').length===5,'Five visible model groups');
+  check(d.querySelectorAll('#research-panel-components table').length===6,'Six notebook comparison tables under five groups');
+  check(d.querySelectorAll('#research-panel-comparison .offtask-model-group').length===5,'Five matching result groups');
+  check(d.querySelector('#offtask-activity-results').parentElement.textContent.includes('ASTime training videos'),'Activity adaptation recommendation retained');
+  check(d.querySelector('#research-panel-comparison').textContent.includes('52.63%'),'Recorded offline classifier result retained');
+  check(d.querySelector('#research-panel-next .fine-tune-priority'),'Strongest adaptation candidate highlighted');
+  check(d.querySelectorAll('#research-panel-next a[href*="drive.google.com/file/d/"]').length===4,'Four uploaded notebooks linked directly');
+  check(!d.querySelector('#research-panel-next').textContent.includes('Example final XGBoost training rows'),'Final step focuses on next steps and notebook links');
+  check([...d.querySelectorAll('#research-panel-next summary')].some(x=>x.textContent==='Why is it the strongest candidate for fine-tuning?'),'Fine-tuning rationale disclosure included');
+  check([...d.querySelectorAll('.offtask-adaptation td summary')].some(x=>x.textContent==='Why is it the strongest candidate for fine-tuning?'),'Fine-tuning rationale inside table cell');
+  check(d.querySelector('a[href="https://ait.ethz.ch/xgaze"]'),'ETH-XGaze links to official dataset');
+  check(d.querySelector('#research-panel-components').textContent.includes('Additional training is not automatically an improvement'),'Direct pretrained model rationale');
+  check(!d.querySelector('#research-panel-components').textContent.includes('Evaluation scope and unseen-data limits'),'Dataset limits presented with their own groups');
+  const photo=d.querySelector('.offtask-camera-setups img');check(photo&&(await fetch(photo.src)).ok,'Homework illustration loads');
+  for(const tab of d.querySelectorAll('.pipeline-tab')){tab.click();check(!d.querySelector('#'+tab.getAttribute('aria-controls')).hidden,'Pipeline opens '+tab.dataset.researchTab);check(d.querySelectorAll('.research-panel:not([hidden])').length===1,'One visible off-task section');}
+  d.querySelector('.pipeline-tab:last-of-type').dispatchEvent(new w.KeyboardEvent('keydown',{key:'End',bubbles:true}));
+  check(d.querySelector('#research-tab-next').getAttribute('aria-selected')==='true','Pipeline keyboard navigation works');
+  for(const width of [390,1440]){frame.style.width=width+'px';d.querySelector('#research-tab-overview').click();check(d.documentElement.scrollWidth<=w.innerWidth,'Off-task no page overflow '+width);}
+  w=await load('overwhelm.html');d=w.document;check(d.querySelectorAll('[data-research-tab]').length===8&&d.querySelector('#research-colab-url'),'Early Overwhelm prototype preserved');
+  check(d.querySelector('.page-heading .eyebrow').textContent.includes('Feature 3'),'Overwhelm is Feature 3');
   w=await load('feature.html?id=focus-sleep#comparison');d=w.document;check(!d.querySelector('#research-panel-comparison').hidden,'Legacy URL and section link work');
-  w=await load('phase1.html');d=w.document;check(d.querySelectorAll('a.feature-button').length===5,'Five available features link to distinct pages');check(new Set([...d.querySelectorAll('a.feature-button')].map(a=>a.getAttribute('href'))).size===5,'Distinct feature page URLs');check(d.querySelector('.feature-button.is-disabled[aria-disabled="true"]')&&!d.querySelector('.feature-button.is-disabled[href]'),'Classroom remains disabled');
+  w=await load('phase1.html');d=w.document;check(d.querySelector('a.feature-button').getAttribute('href')==='off-task.html','Off-task card appears first');check(d.querySelectorAll('a.feature-button').length===5,'Five available features link to distinct pages');check(new Set([...d.querySelectorAll('a.feature-button')].map(a=>a.getAttribute('href'))).size===5,'Distinct feature page URLs');check(d.querySelector('.feature-button.is-disabled[aria-disabled="true"]')&&!d.querySelector('.feature-button.is-disabled[href]'),'Classroom remains disabled');
  } catch(error){failures++;lines.push('ERROR '+error.stack);}
  lines.push('\n'+lines.length+' checks; '+failures+' failures.');document.querySelector('#results').textContent=lines.join('\n');document.body.dataset.status=failures?'failed':'passed';
 })();

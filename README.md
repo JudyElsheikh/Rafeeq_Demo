@@ -19,7 +19,7 @@ Open **http://localhost:8000**. Stop the server with Ctrl+C. All pages also work
 - `index.html`: one scrolling home page with a banner, five expandable use cases (UC1-UC5), and four phase cards with independently scrollable feature lists. Only Phase 1 opens a page.
 - `phase1.html`: the eight-step pipeline with connecting arrows, followed by five numbered feature links and a disabled Classroom Guidance card pending mentor confirmation.
 - Each available Core AI feature has its own page: `overwhelm.html`, `focus-sleep.html`, `off-task.html`, `homework.html`, and `chores.html`. The older `feature.html?id=...` URLs also work. Classroom remains unavailable pending mentor confirmation.
-- Feature 1 preserves its eight-tab prototype. Feature 2 contains the supplied team research in the same hierarchy; other available features show their existing overview and proposed system until research is supplied.
+- Feature 1 is Off-Task Detection; Feature 3 (Early Overwhelm Detection) preserves its eight-tab prototype. Feature 2 contains the supplied team research in the same hierarchy; other available features show their existing overview and proposed system until research is supplied.
 - `js/research.js` supplies the shared tab layout; feature evidence stays in separate files such as `js/focus-sleep.js`. Feature 2 includes exact result tables for both tasks, six supplied screenshots, the PDF column guide, grouped evaluation details, examples and the Colab link. It explicitly identifies sleep as pending and records source discrepancies.
 - `tools/import_focus_sleep.py <report.html>` rebuilds the curated Feature 2 content from the supplied report; it does not execute report scripts or instructions.
 - Former feature and phase overview URLs redirect to the relevant section of the home page.
@@ -32,7 +32,7 @@ The data contains **35 unique feature IDs and 36 use-case placements**. Symptom 
 
 All research data lives in `js/`. The scripts are loaded in dependency order; no module server or bundler is required.
 
-For the feature research tabs, add supplied sections to `Rafeeq.researchWorkspaces[featureId]` in a feature-specific file loaded after `js/research.js` and before `js/app.js`. Use the standard hierarchy (overview, system, models, datasets, preparation, evaluation-set, comparison, examples), including only stages supported by the evidence. Feature 1 continues to use `js/overwhelm.js`. The older data schemas below remain available for future structured imports; Feature 2 currently uses its curated workspace content.
+For the feature research tabs, add supplied sections to `Rafeeq.researchWorkspaces[featureId]` in a feature-specific file loaded after `js/research.js` and before `js/app.js`. Use the standard hierarchy (overview, system, models, datasets, preparation, evaluation-set, comparison, examples), including only stages supported by the evidence. Feature 3 continues to use `js/overwhelm.js`. The older data schemas below remain available for future structured imports; Feature 2 currently uses its curated workspace content.
 
 1. `features.js`: feature names, use cases, classifications, phases and badge details.
 2. `phases.js`: exact phase plan, eight prototype steps and editable starting system configurations. The last two Phase 4 entries retain Core AI classification and a source-plan review indicator.
@@ -69,3 +69,7 @@ Serve locally and visit `/tests/browser-check.html` to run the revised layout ch
 Feature research verification: serve `/tests/research-check.html` for tab navigation, both result tables, evidence isolation, screenshot loading, legacy URLs and responsive overflow checks.
 
 Verified after Feature 2 integration: 71 research checks, 51 Feature 1 prototype checks, 86 layout checks, and proposal checks passed in headless Chrome. Feature 2 tabs were checked for page overflow at 320, 390, 768 and 1440 pixels; the comparison page was also inspected visually. Models and the external Colab notebook were not executed.
+
+Off-task detection uses its own evaluation-first workflow in js/off-task.js, with six clickable Phase 1 style pipeline steps as its navigation, including AI system type as step two and collapsed supporting detail.
+
+The first off-task step explains the feature, presents input/output cards and an illustrative homework setup photo, and shows the intended session flow. Generated image: assets/images/off-task-homework-example.png (built-in imagegen). Prompt: two side-by-side natural home-study photos showing paper homework with a diagonal laptop and digital homework with a laptop in front, inspired by the supplied reference; no text or overlays.
