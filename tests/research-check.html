@@ -42,7 +42,8 @@
   check(d.querySelector('#research-panel-comparison').textContent.includes('52.63%'),'Recorded offline classifier result retained');
   check(d.querySelector('#research-panel-next .fine-tune-priority'),'Strongest adaptation candidate highlighted');
   check(d.querySelectorAll('#research-panel-next a[href*="drive.google.com/file/d/"]').length===4,'Four uploaded notebooks linked directly');
-  check(!d.querySelector('#research-panel-next').textContent.includes('Example final XGBoost training rows'),'Final step focuses on next steps and notebook links');
+  check(d.querySelector('#research-panel-next').textContent.includes('Example final XGBoost training rows'),'Final training dataset restored');
+  check(d.querySelector('#research-panel-next').textContent.includes('Manually labelled:')&&d.querySelector('#research-panel-next').textContent.includes('Extracted by the models:'),'Manual and extracted data explained');
   check([...d.querySelectorAll('#research-panel-next summary')].some(x=>x.textContent==='Why is it the strongest candidate for fine-tuning?'),'Fine-tuning rationale disclosure included');
   check([...d.querySelectorAll('.offtask-adaptation td summary')].some(x=>x.textContent==='Why is it the strongest candidate for fine-tuning?'),'Fine-tuning rationale inside table cell');
   check(d.querySelector('a[href="https://ait.ethz.ch/xgaze"]'),'ETH-XGaze links to official dataset');

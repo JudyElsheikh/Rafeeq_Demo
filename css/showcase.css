@@ -298,3 +298,14 @@ body[data-feature="off-task"] .research-panel a:focus-visible{outline:2px solid 
 .offtask-outcomes strong:nth-child(3){background:#526474}
 @media(max-width:700px){.offtask-flow-row{grid-template-columns:minmax(0,1fr)}.offtask-arrow{transform:rotate(90deg);padding:4px}.offtask-streams{grid-template-columns:repeat(2,minmax(0,1fr))}.offtask-node{padding:16px 12px}}
 @media(max-width:380px){.offtask-streams{grid-template-columns:minmax(0,1fr)}}
+/* Match the off-task horizontal development pipeline. */
+body[data-feature="overwhelm"] .pipeline-panel{margin-bottom:28px}
+body[data-feature="overwhelm"] .pipeline-block:has(.pipeline-tab){padding:0;display:flex}
+body[data-feature="overwhelm"] .research-panel code{overflow-wrap:anywhere}
+body[data-feature="focus-sleep"] .pipeline-panel{margin-bottom:28px}
+body[data-feature="focus-sleep"] .pipeline-block:has(.pipeline-tab){padding:0;display:flex}
+body[data-feature="focus-sleep"] .research-panel a:not(.button){color:#1664a0;text-decoration:underline dotted;text-underline-offset:4px}
+body[data-feature="focus-sleep"] .research-panel a:not(.button):hover{text-decoration-style:solid}
+body[data-feature="focus-sleep"] .research-panel code{overflow-wrap:anywhere}
+.focus-prediction-branches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;border-top:2px solid #8eb09b;border-bottom:2px solid #8eb09b;padding:16px 0}
+@media(max-width:700px){.focus-prediction-branches{grid-template-columns:1fr}}

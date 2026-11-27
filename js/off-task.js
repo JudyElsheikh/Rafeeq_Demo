@@ -267,6 +267,6 @@
   {id:'components', label:'Choose candidate pretrained models', html:content.components.html},
   {id:'evaluation', label:'Choose evaluation datasets', html:content.data.html},
   {id:'comparison', label:'Compare results and select the best candidates', html:content.results.html},
-  {id:'next', label:'Further steps & notebook links', html:content.next.html + content['fine-tuning'].html + content.resources.html}
+  {id:'next', label:'Further steps & notebook links', html:content.next.html + content['future-data'].html + content['fine-tuning'].html + content.resources.html}
  ];
 })();
